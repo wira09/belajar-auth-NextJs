@@ -1,7 +1,9 @@
 import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 const Dashboard = async () => {
   const session = await auth();
+  if (!session) redirect("/login");
   return (
     <div className="max-w-screen-xl mx-auto py-6 p-4">
       <div className="text-2xl">Dashboard</div>
