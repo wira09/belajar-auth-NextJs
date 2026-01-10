@@ -3,15 +3,19 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./lib/prisma";
 import Credentials from "next-auth/providers/credentials";
 import { SignInSchema } from "@/lib/zod";
+import { compareSync } from "bcrypt-ts";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
+  pages: {
+    signIn: "/login",
+  },
   providers: [
     Credentials({
       credentials: {
         email: {},
-        password: {}
+        password: {},
       },
       authorize: async (credentials) => {
         const validateFields = SignInSchema.safeParse(credentials);
@@ -25,13 +29,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const { email, password } = validateFields.data;
 
         const user = await prisma.user.findUnique({
-          where: { email }
-        })
+          where: { email },
+        });
 
         if (!user || !user.password) {
-          throw new Error("No user found")
+          throw new Error("No user found");
         }
-      }
-    })
+
+        const passwordMath = compareSync(password, user.password);
+
+        if (!passwordMath) return null;
+
+        return user;
+      },
+    }),
   ],
 });
