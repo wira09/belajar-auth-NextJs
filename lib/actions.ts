@@ -48,7 +48,7 @@ export const signInCredentials = async (prevstate: unknown, formData: FormData) 
     const { email, password } = validateField.data;
 
     try {
-        await signIn("credentials", { email, password, redirectTo: "/dahboard" })
+        await signIn("credentials", { email, password, redirectTo: "/dashboard" })
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
