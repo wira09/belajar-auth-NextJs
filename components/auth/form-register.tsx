@@ -1,9 +1,13 @@
-import React from "react";
+"use client";
+
+import { useFormState } from "react-dom";
 import Link from "next/link";
+import { signUpCredentials } from "@/lib/actions";
 
 const FormRegister = () => {
+  const [state, formAction] = useFormState(signUpCredentials, null);
   return (
-    <form className="space-y-5">
+    <form action={formAction} className="space-y-5">
       {/* Name */}
       <div>
         <label
@@ -17,10 +21,11 @@ const FormRegister = () => {
           type="text"
           name="name"
           placeholder="John Doe"
+          defaultValue={state?.data?.name || ""}
           className="w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm
                  focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
         />
-        <p className="mt-1 text-sm text-red-500">message</p>
+        <p className="mt-1 text-sm text-red-500">{state?.error?.name}</p>
       </div>
 
       {/* Email */}
@@ -36,10 +41,11 @@ const FormRegister = () => {
           type="email"
           name="email"
           placeholder="johndoe@gmail.com"
+          defaultValue={state?.data?.email || ""}
           className="w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm
                  focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
         />
-        <p className="mt-1 text-sm text-red-500">message</p>
+        <p className="mt-1 text-sm text-red-500">{state?.error?.email}</p>
       </div>
 
       {/* Password */}
@@ -55,10 +61,11 @@ const FormRegister = () => {
           type="password"
           name="password"
           placeholder="••••••••"
+          defaultValue={state?.data?.password || ""}
           className="w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm
                  focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
         />
-        <p className="mt-1 text-sm text-red-500">message</p>
+        <p className="mt-1 text-sm text-red-500">{state?.error?.password}</p>
       </div>
 
       {/* Confirm Password */}
@@ -74,10 +81,13 @@ const FormRegister = () => {
           type="password"
           name="confirmPassword"
           placeholder="••••••••"
+          defaultValue={state?.data?.confirmPassword || ""}
           className="w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm
                  focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
         />
-        <p className="mt-1 text-sm text-red-500">message</p>
+        <p className="mt-1 text-sm text-red-500">
+          {state?.error?.confirmPassword}
+        </p>
       </div>
 
       {/* Button */}
