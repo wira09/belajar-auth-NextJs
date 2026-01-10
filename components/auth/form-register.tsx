@@ -3,11 +3,22 @@
 import { useFormState } from "react-dom";
 import Link from "next/link";
 import { signUpCredentials } from "@/lib/actions";
+import { RegisterButton } from "@/components/button";
 
 const FormRegister = () => {
   const [state, formAction] = useFormState(signUpCredentials, null);
   return (
     <form action={formAction} className="space-y-5">
+      {/* alert */}
+      {state?.message ? (
+        <div
+          className="p-4 mb-4 text-sm text-red-500 rounded-lg bg-red-100"
+          role="alert"
+        >
+          <span className="font-medium">{state?.message}</span>
+        </div>
+      ) : null}
+
       {/* Name */}
       <div>
         <label
@@ -20,7 +31,7 @@ const FormRegister = () => {
           id="name"
           type="text"
           name="name"
-          placeholder="John Doe"
+          placeholder="Masukan nama anda"
           defaultValue={state?.data?.name || ""}
           className="w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm
                  focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
@@ -40,7 +51,7 @@ const FormRegister = () => {
           id="email"
           type="email"
           name="email"
-          placeholder="johndoe@gmail.com"
+          placeholder="Masukan email anda"
           defaultValue={state?.data?.email || ""}
           className="w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm
                  focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
@@ -91,13 +102,7 @@ const FormRegister = () => {
       </div>
 
       {/* Button */}
-      <button
-        type="submit"
-        className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium
-               text-white uppercase hover:bg-blue-600 transition"
-      >
-        Register
-      </button>
+      <RegisterButton />
 
       {/* Link */}
       <p className="text-center text-sm text-gray-500">
