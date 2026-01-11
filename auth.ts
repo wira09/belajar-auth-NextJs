@@ -45,6 +45,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   // callback
+  // callback
   callbacks: {
     authorized({
       auth, request: { nextUrl }
