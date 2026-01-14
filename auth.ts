@@ -46,21 +46,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   // callback
   callbacks: {
-    // authorized({
-    //   auth, request: { nextUrl }
-    // }) {
-    //   const isLoggedIn = !!auth?.user;
-    //   const ProtectedRoutes = ["/dashboard", "/user", "/product"];
-
-    //   if (!isLoggedIn && ProtectedRoutes.includes(nextUrl.pathname)) {
-    //     return Response.redirect(new URL("/login", nextUrl))
-    //   }
-
-    //   if (isLoggedIn && nextUrl.pathname.startsWith("/login")) {
-    //     return Response.redirect(new URL("/dashboard", nextUrl))
-    //   }
-    //   return true;
-    // }
     jwt({ token, user }) {
       if (user) token.role = user.role;
       return token;
