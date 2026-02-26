@@ -5,7 +5,7 @@ import { prisma } from "./lib/prisma"; // Instance Prisma client
 import Credentials from "next-auth/providers/credentials"; // Penyedia otentikasi berbasis kredensial (email/password)
 import { SignInSchema } from "@/lib/zod"; // Skema validasi Zod untuk data login
 import { compareSync } from "bcrypt-ts"; // Fungsi untuk membandingkan hash password
-import Google from "next-auth/providers/google";
+import Google from "next-auth/providers/google"; // import google
 
 // Konfigurasi utama NextAuth
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -19,7 +19,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   // Daftar penyedia otentikasi yang digunakan
   providers: [
-    Google,
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID!,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+    }),
     // Menggunakan penyedia 'Credentials' untuk login dengan email dan password
     Credentials({
       // Definisikan field yang diharapkan untuk kredensial

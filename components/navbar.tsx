@@ -110,7 +110,6 @@ const navbar = async () => {
               Sign In
             </Link>
           )}
-          ;
         </div>
       </div>
     </nav>
